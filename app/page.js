@@ -1,5 +1,5 @@
 import KeySuppliers from "@/components/key-suppliers/KeySuppliers";
-import SourcingServices from "@/components/sourcing-services/SourcingServices";
+import TradeServices from "@/components/sourcing-services/TradeServices";
 import TopBanner from "@/components/top-banner/TopBanner";
 import TrendingProducts from "@/components/trending-products/TrendingProducts";
 
@@ -26,7 +26,7 @@ export default async function Page() {
       <TopBanner />
       <TrendingProducts />
       <KeySuppliers />
-      <SourcingServices />
+      <TradeServices />
     </main>
   );
 }

@@ -66,7 +66,7 @@ const trendingProducts = [
     name: "Electric Transformers",
     imageUrl: transformer,
     smallDesc:
-      "Boost or reduce voltage with ease using our electric transformers in various capacities.",
+      "Boost or reduce voltage with ease using our electric transformers in various capacities upto 500MVA.",
     noOfSuppliers: 4,
     lowestPrice: 1200,
     unit: "unit",
@@ -95,16 +95,18 @@ const trendingProducts = [
 
 function TrendingProducts() {
   return (
-    <div className="w-full mt-4">
-      <div className="container mx-auto bg-white px-4 py-8 h-full">
-        <h3 className="mb-8">Trending Products</h3>
-        <ul className="grid grid-cols-4 gap-4">
-          {trendingProducts.map((product, pdIndex) => (
-            <li key={pdIndex}>
-              <ProductCard product={product} />
-            </li>
-          ))}
-        </ul>
+    <div className="w-full mt-8">
+      <div className="container mx-auto h-full">
+        <h3 className="mb-4">Trending Products</h3>
+        <div className="bg-white p-4">
+          <ul className="grid grid-cols-4 gap-4">
+            {trendingProducts.map((product, pdIndex) => (
+              <li key={pdIndex}>
+                <ProductCard product={product} />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

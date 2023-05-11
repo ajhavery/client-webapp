@@ -1,3 +1,4 @@
+import Footer from "@/components/footer/Footer";
 import "./globals.css";
 import MainHeader from "@/components/header/MainHeader";
 import SubHeader from "@/components/header/SubHeader";
@@ -19,7 +20,10 @@ export default function RootLayout({ children }) {
         <div className="mt-20">
           <SubHeader />
         </div>
-        {children}
+        <div>{children}</div>
+        <div className="mt-8">
+          <Footer />
+        </div>
       </body>
     </html>
   );

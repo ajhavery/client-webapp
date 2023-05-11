@@ -28,6 +28,10 @@ function SearchBar() {
     setIsOpen(false);
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div className="rounded-full border-2 border-primary flex items-center gap-2 h-10 w-full relative">
       <button
@@ -61,11 +65,11 @@ function SearchBar() {
         </ul>
       )}
 
-      <form className="h-full w-full flex items-center">
+      <form className="h-full w-full flex items-center" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Tell us what you are looking for..."
-          className="h-6 w-full text-sm"
+          className="h-6 w-full text-sm px-2 outline-none"
         />
         <button
           type="submit"
