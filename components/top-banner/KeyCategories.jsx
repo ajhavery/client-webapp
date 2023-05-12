@@ -8,7 +8,7 @@ function KeyCategories({ keyCategories }) {
         <table>
           <tbody>
             {keyCategories.map((item, index) => (
-              <tr key={index} className="hover:bg-gray-200">
+              <tr key={index} className="hover:bg-gray-200 cursor-pointer">
                 <td className="py-1">
                   <div className="w-6 h-6 bg-gray-200 border rounded-full flex items-center justify-center">
                     <Image

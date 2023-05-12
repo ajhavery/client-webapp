@@ -63,7 +63,7 @@ function TradeServices() {
         <h3 className="mb-4">Sourcing Solutions & Tailored Services</h3>
         <div className="grid grid-cols-4 gap-4">
           {tradeServices.map((service, svcIndex) => (
-            <TradeServicesCard service={service} />
+            <TradeServicesCard service={service} key={svcIndex} />
           ))}
         </div>
       </div>
