@@ -31,7 +31,7 @@ const footerColFour = [
 
 function Footer() {
   return (
-    <footer className="bg-white py-6 border-t shadow-md z-10">
+    <footer className="bg-white pt-6 pb-4 border-t shadow-md z-10">
       <div className="container mx-auto flex flex-wrap justify-center">
         <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-4">
           <h3 className="text-lg font-semibold mb-2">Company</h3>
@@ -86,7 +86,7 @@ function Footer() {
           </ul>
         </div>
       </div>
-      <div className="pt-6 text-center border-t">
+      <div className="pt-4 text-center border-t">
         <p className="text-gray-500">
           &copy; {new Date().getFullYear()} Your Company. All rights reserved.
         </p>
