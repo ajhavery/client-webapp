@@ -10,7 +10,7 @@
 /* overriding default styles */
 @layer base {
   body {
-    @apply font-inter text-[#222222] bg-[#F0F1F2];
+    @apply font-opensans text-[#222222] bg-[#F0F1F2];
   }
   h1 {
     @apply font-bold;

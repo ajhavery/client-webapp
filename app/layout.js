@@ -2,6 +2,8 @@ import Footer from "@/components/footer/Footer";
 import "./globals.css";
 import MainHeader from "@/components/header/MainHeader";
 import SubHeader from "@/components/header/SubHeader";
+import Script from "next/script";
+import { WebVitals } from "@/components/web-vitals";
 
 export const metadata = {
   title:
@@ -24,6 +26,33 @@ export default function RootLayout({ children }) {
         <div className="mt-8">
           <Footer />
         </div>
+
+        {/* Google Analytics Scripts */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-9DH6SJ5L6M"
+        />
+
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-9DH6SJ5L6M', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
+
+        {/* Google Analytics scripts end */}
+
+        {/* Report Web Vitals */}
+        <WebVitals />
+        {/* Report web vitals end */}
       </body>
     </html>
   );

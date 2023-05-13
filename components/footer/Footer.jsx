@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const footerColOne = [
-  { text: "About Us", link: "/" },
-  { text: "Contact Us", link: "/" },
-  { text: "Terms of Service", link: "/" },
-  { text: "Privacy Policy", link: "/" },
+  { text: "About Us", link: "/about" },
+  { text: "Contact Us", link: "/contact" },
+  { text: "Terms of Service", link: "/terms" },
+  { text: "Privacy Policy", link: "/privacy" },
 ];
 
 const footerColTwo = [
@@ -88,7 +88,7 @@ function Footer() {
       </div>
       <div className="pt-4 text-center border-t">
         <p className="text-gray-500">
-          &copy; {new Date().getFullYear()} Your Company. All rights reserved.
+          &copy; {new Date().getFullYear()} Dhamika.com | All rights reserved.
         </p>
       </div>
     </footer>
