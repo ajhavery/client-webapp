@@ -34,7 +34,7 @@ function Footer() {
     <footer className="bg-white pt-6 pb-4 border-t shadow-md z-10">
       <div className="container mx-auto flex flex-wrap justify-center">
         <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-4">
-          <h3 className="text-lg font-semibold mb-2">Company</h3>
+          <h3 className="text-lg font-semibold mb-2">About Company</h3>
           <ul>
             {footerColOne.map((item, index) => (
               <li
