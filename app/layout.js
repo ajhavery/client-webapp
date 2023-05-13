@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
         <div className="mt-20">
           <SubHeader />
         </div>
-        <div>{children}</div>
+        <div className="px-4 md:px-8">{children}</div>
         <div className="mt-8">
           <Footer />
         </div>

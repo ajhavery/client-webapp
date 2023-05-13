@@ -15,7 +15,7 @@ function ProductCard({ product }) {
         <p className="text-gray-600">{product.smallDesc}</p>
         <div className="border border-dashed my-2"></div>
         <p>
-          <span>No of key suppliers: </span>
+          <span className="font-semibold">No of key suppliers: </span>
           <span className=""> {product.noOfSuppliers}</span>
         </p>
 

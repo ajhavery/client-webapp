@@ -33,12 +33,14 @@ function SearchBar() {
   };
 
   return (
-    <div className="rounded-full border-2 border-primary flex items-center gap-2 h-10 w-full relative">
+    <div className="rounded-full border-2 border-primary flex items-center gap-2 h-8 md:h-10 w-full relative">
       <button
-        className="pl-4 pr-2 py-1.5 border-r border-[##DADADA] flex items-center gap-2"
+        className="pl-4 pr-2 py-1.5 border-r border-[##DADADA] flex items-center gap-2 h-full"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{activeSearch == "products" ? "Products" : "Suppliers"}</span>
+        <span className="text-xs sm:text-sm md:text-base">
+          {activeSearch == "products" ? "Products" : "Suppliers"}
+        </span>
         <IoChevronDownOutline
           className={`text-sm text-gray-500 transition ${
             isOpen && "rotate-180"
@@ -48,17 +50,17 @@ function SearchBar() {
       {isOpen && (
         <ul
           ref={menuRef}
-          className="absolute top-10 left-0 whitespace-nowrap bg-white border shadow"
+          className="absolute top-8 sm:top-10 left-0 whitespace-nowrap bg-white border shadow"
         >
           <li
             onClick={() => handleMenuItemClick("products")}
-            className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+            className="px-4 py-1 hover:bg-gray-100 cursor-pointer text-xs md:text-sm"
           >
             Products
           </li>
           <li
             onClick={() => handleMenuItemClick("suppliers")}
-            className="px-4 py-1 hover:bg-gray-100 cursor-pointer"
+            className="px-4 py-1 hover:bg-gray-100 cursor-pointer text-xs md:text-sm"
           >
             Suppliers
           </li>
@@ -68,14 +70,14 @@ function SearchBar() {
       <form className="h-full w-full flex items-center" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Tell us what you are looking for..."
-          className="h-6 w-full text-sm px-2 outline-none"
+          placeholder="What are you looking for..."
+          className="h-6 w-full px-2 outline-none text-xs sm:text-sm"
         />
         <button
           type="submit"
-          className="bg-primary rounded-r-full h-full w-16 px-2 py-1.5 flex items-center justify-center"
+          className="bg-primary rounded-r-full h-full w-10 md:w-16 px-2 py-1.5 flex items-center justify-center"
         >
-          <IoSearchOutline className="text-white text-2xl" />
+          <IoSearchOutline className="text-white text-base sm:text-xl md:text-2xl" />
         </button>
       </form>
     </div>

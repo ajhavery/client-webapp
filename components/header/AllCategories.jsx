@@ -129,20 +129,24 @@ function AllCategories() {
             : "border-r-[#E5E7EB]"
         }`}
       >
-        <TfiMenuAlt />
-        <span className="font-roboto text-sm">All Categories</span>
+        <TfiMenuAlt className="w-3 h-3 sm:w-4 sm:h-4" />
+        <span className="font-roboto text-xs sm:text-sm whitespace-nowrap">
+          All Categories
+        </span>
         <IoChevronDownOutline
-          className={`${isVisible && "rotate-180"} transition`}
+          className={`${
+            isVisible && "rotate-180"
+          } transition w-3 h-3 sm:w-4 sm:h-4`}
         />
       </div>
       {isVisible && (
-        <div className="absolute top-10 left-0 w-[30rem] shadow-[0px_0px_2px_0px_rgba(0,0,0,0.4)]">
-          <ul className="bg-white px-2 py-4 grid grid-cols-2">
+        <div className="absolute top-10 left-0 w-[14rem] sm:w-[30rem] shadow-[0px_0px_2px_0px_rgba(0,0,0,0.4)]">
+          <ul className="bg-white px-2 py-4 grid grid-cols-1 sm:grid-cols-2">
             {categories &&
               categories.map((item, index) => (
                 <li
                   key={index}
-                  className="whitespace-nowrap px-4 py-1 text-sm hover:bg-purple-100 hover:text-primary rounded cursor-pointer flex items-center gap-1.5"
+                  className="whitespace-nowrap px-4 py-1 text-xs sm:text-sm hover:bg-purple-100 hover:text-primary rounded cursor-pointer flex items-center gap-1.5"
                 >
                   {item.icon}
                   {item.product}

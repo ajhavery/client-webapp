@@ -18,7 +18,7 @@ const trendingProducts = [
     smallDesc:
       "Keep cool with our wide selection of fans in various sizes, perfect for any room or outdoor space.",
     noOfSuppliers: 4,
-    lowestPrice: 1200,
+    lowestPrice: 12,
     unit: "unit",
   },
   {
@@ -28,7 +28,7 @@ const trendingProducts = [
     smallDesc:
       "Upgrade your machinery with our quality gears and transmission apparatus in a range of sizes.",
     noOfSuppliers: 4,
-    lowestPrice: 1200,
+    lowestPrice: 2,
     unit: "unit",
   },
   {
@@ -38,7 +38,7 @@ const trendingProducts = [
     smallDesc:
       "Power up your devices with our electric motors, perfect for both homes and industries.",
     noOfSuppliers: 4,
-    lowestPrice: 1200,
+    lowestPrice: 10,
     unit: "unit",
   },
   {
@@ -48,7 +48,7 @@ const trendingProducts = [
     smallDesc:
       "Keep your home or workplace running smoothly with our designer range of durable plugs and sockets.",
     noOfSuppliers: 4,
-    lowestPrice: 1200,
+    lowestPrice: 1,
     unit: "unit",
   },
   {
@@ -58,7 +58,7 @@ const trendingProducts = [
     smallDesc:
       "Upgrade your plumbing with our durable taps, suitable for small scale to heavy duty applications.",
     noOfSuppliers: 4,
-    lowestPrice: 1200,
+    lowestPrice: 1,
     unit: "unit",
   },
   {
@@ -68,7 +68,7 @@ const trendingProducts = [
     smallDesc:
       "Boost or reduce voltage with ease using our electric transformers in various capacities upto 500MVA.",
     noOfSuppliers: 4,
-    lowestPrice: 1200,
+    lowestPrice: 20,
     unit: "unit",
   },
   {
@@ -76,9 +76,9 @@ const trendingProducts = [
     name: "Valves",
     imageUrl: valve,
     smallDesc:
-      "Control the flow of liquids and gases with our selection of high-quality valves for both small scale and heavy duty applications.",
+      "Control liquids and gases flow with our selection of high-quality valves for both small scale and heavy duty applications.",
     noOfSuppliers: 4,
-    lowestPrice: 1200,
+    lowestPrice: 12,
     unit: "unit",
   },
   {
@@ -88,18 +88,18 @@ const trendingProducts = [
     smallDesc:
       "Keep your electrical systems running smoothly with our range of wires and cables.",
     noOfSuppliers: 4,
-    lowestPrice: 1200,
+    lowestPrice: 1,
     unit: "unit",
   },
 ];
 
 function TrendingProducts() {
   return (
-    <div className="w-full mt-8">
-      <div className="container mx-auto h-full">
+    <div className="w-full mt-4 sm:mt-6 lg:mt-8">
+      <div className="container mx-auto">
         <h3 className="mb-4">Trending Products</h3>
-        <div className="bg-white p-4">
-          <ul className="grid grid-cols-4 gap-4">
+        <div className="bg-white p-2 sm:p-4 lg:p-6">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {trendingProducts.map((product, pdIndex) => (
               <li key={pdIndex}>
                 <ProductCard product={product} />

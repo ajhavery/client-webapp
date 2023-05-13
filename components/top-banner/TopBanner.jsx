@@ -72,8 +72,9 @@ const slides = [
 function TopBanner() {
   return (
     <div className="w-full mt-4">
-      <div className="container mx-auto bg-white p-4 h-full">
-        <div className="grid grid-cols-5 gap-2 h-full">
+      <div className="container mx-auto bg-white p-4">
+        {/* large screen layout */}
+        <div className="hidden md:grid grid-cols-5 gap-2 h-full">
           <div className="col-span-1 h-full">
             <KeyCategories keyCategories={keyCategories} />
           </div>
@@ -82,6 +83,20 @@ function TopBanner() {
           </div>
           <div className="col-span-1 h-full">
             <PostQueryBar />
+          </div>
+        </div>
+        {/* small screen layout */}
+        <div className="block md:hidden">
+          <div className="mb-8">
+            <FeaturedBanner slides={slides} />
+          </div>
+          <div className="grid grid-cols-2">
+            <div className="hidden sm:block">
+              <KeyCategories keyCategories={keyCategories} />
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <PostQueryBar />
+            </div>
           </div>
         </div>
       </div>

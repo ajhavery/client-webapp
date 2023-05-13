@@ -50,11 +50,11 @@ const keySuppliers = [
 
 function KeySuppliers() {
   return (
-    <div className="w-full mt-8">
-      <div className="container mx-auto h-full">
+    <div className="w-full mt-4 sm:mt-6 lg:mt-8">
+      <div className="container mx-auto">
         <h3 className="mb-4">Key Suppliers</h3>
-        <div className="bg-white p-4">
-          <ul className="grid grid-cols-2 gap-4">
+        <div className="bg-white p-2 sm:p-4 lg:p-6">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {keySuppliers.map((supplier, spIndex) => (
               <li key={spIndex}>
                 <SupplierCard supplier={supplier} />

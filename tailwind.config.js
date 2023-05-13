@@ -19,6 +19,9 @@ module.exports = {
         passive: "#E6A03A",
         neutral: "#D8DBD1",
       },
+      inset: {
+        "1/2": "50%",
+      },
     },
   },
   plugins: [],
