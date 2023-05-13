@@ -1,23 +1,27 @@
 # Base image
-FROM node:18
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json files to the working directory
-COPY package*.json ./
+# Copy package.json and yarn.lock to the working directory
+COPY package.json yarn.lock ./
 
 # Install dependencies
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
-# Copy app files to the working directory
+# Copy the rest of the application code to the working directory
 COPY . .
 
-# Build the app
-# RUN yarn build
+# Build the Next.js application
+RUN yarn build
 
-# Expose port 3000
+# Set the environment variables
+ENV NODE_ENV production
+ENV PORT 3000
+
+# Expose the application port
 EXPOSE 3000
 
-# Start the app
-CMD [ "yarn", "start" ]
+# Start the Next.js application
+CMD ["yarn", "start"]

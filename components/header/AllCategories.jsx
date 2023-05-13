@@ -123,10 +123,10 @@ function AllCategories() {
       onMouseLeave={() => setIsVisible(false)}
     >
       <div
-        className={`h-full flex items-center gap-2 mr-2 px-2 hover:bg-white cursor-pointer ${
+        className={`h-full flex items-center gap-2 mr-2 px-2 hover:bg-white cursor-pointer border-r ${
           isVisible
-            ? "bg-white rounded-t border-b-transparent text-primary shadow-[0px_0px_2px_0px_rgba(0,0,0,0.4)]"
-            : "border-r border-r-[#E5E7EB]"
+            ? "bg-white rounded-t border-r-transparent text-primary shadow-[0px_0px_2px_0px_rgba(0,0,0,0.4)]"
+            : "border-r-[#E5E7EB]"
         }`}
       >
         <TfiMenuAlt />

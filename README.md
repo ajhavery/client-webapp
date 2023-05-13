@@ -1,38 +1,154 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Docker Commands
 
-## Getting Started
+Tutorial followed: https://learn.microsoft.com/en-us/azure/app-service/tutorial-custom-container?tabs=azure-cli&pivots=container-linux
 
-First, run the development server:
+## To build docker image
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+docker build -t dhamika-client .
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## To run docker container
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+docker run -p 3000:3000 dhamika-client
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+To run in an interative shell:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+docker run -it -p 3000:3000 dhamika-client
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Stop running docker container
 
-## Learn More
+To see list of runnign docker containers: docker ps
+To stop use:
+docker stop container-id
+OR
+docker stop container-name
 
-To learn more about Next.js, take a look at the following resources:
+# Get credentials of acr using
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+az acr credential show --resource-group <resource-group-name> --name <registry-name>
+az acr credential show --resource-group dhamika --name dhamika
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Push docker image to azure container registry
 
-## Deploy on Vercel
+### Use the docker login command to sign in to the container registry:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+docker login dhamika.azurecr.io --username <registry-username>
+docker login dhamika.azurecr.io --username dhamika
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### When the sign-in is successful, tag your local Docker image to the registry:
+
+docker tag <image-name> <registry-name>.azurecr.io/<image-name>:latest
+docker tag dhamika-client dhamika.azurecr.io/dhamika-client:latest
+
+### Use the docker push command to push the image to the registry:
+
+docker push <registry-name>.azurecr.io/<image-name>:latest
+docker push dhamika.azurecr.io/dhamika-client:latest
+
+## Create a managed identity in the resource group
+
+App Service can either use a default managed identity or a user-assigned managed identity to authenticate with a container registry. In this case, we'll use a user-assigned managed identity.
+
+az identity create --name <id-name> --resource-group <resource-group-name>
+az identity create --name ajhavery --resource-group dhamika
+
+## Authorize the managed identity to pull image from container registry:
+
+The managed identity we created doesn't have authorization to pull from the container registry yet. In this step, you enable the authorization.
+
+### Retrieve the principal ID for the managed identity:
+
+principalId=$(az identity show --resource-group <resource-group-name> --name <mamaged-id-name> --query principalId --output tsv)
+principalId=$(az identity show --resource-group dhamika --name ajhavery --query principalId --output tsv)
+
+### Retrieve the resource ID for the container registry:
+
+registryId=$(az acr show --resource-group <resource-group-name> --name <registry-name> --query id --output tsv)
+registryId=$(az acr show --resource-group dhamika --name dhamika --query id --output tsv)
+
+### Grant the managed identity permission to access the container registry:
+
+az role assignment create --assignee $principalId --scope $registryId --role "AcrPull"
+
+# Create the WebApp
+
+## Create an App Service plan using the az appservice plan create command:
+
+az appservice plan create --name <app-service-plan-name> --resource-group <resource-group-name> --is-linux
+az appservice plan create --name dhamikaAppServicePlan --resource-group dhamika --is-linux
+
+## Create the webapp
+
+az webapp create --resource-group <resource-group-name> --plan <app-service-plan-name> --name <app-name> --deployment-container-image-name <registry-name>.azurecr.io/<image-name>:latest
+
+az webapp create --resource-group dhamika --plan dhamikaAppServicePlan --name dhamika-client --deployment-container-image-name dhamika.azurecr.io/dhamika-client:latest
+
+## To retrieve the web app's container settings at any time:
+
+az webapp config container show --name <app-name> --resource-group <resource-group-name>
+az webapp config container show --name dhamika-client --resource-group dhamika
+
+# Configure the webapp
+
+## Use az webapp config appsettings set to set the WEBSITES_PORT environment variable as expected by the app code:
+
+az webapp config appsettings set --resource-group <resource-group-name> --name <app-name> --settings WEBSITES_PORT=<PORT>
+
+az webapp config appsettings set --resource-group dhamika --name dhamika-client --settings WEBSITES_PORT=3000
+
+## Enable the user-assigned managed identity in the web app with the az webapp identity assign command:
+
+id=$(az identity show --resource-group <resource-group-name> --name <managed-id-name> --query id --output tsv)
+az webapp identity assign --resource-group <resource-group-name> --name <app-name> --identities $id
+
+id=$(az identity show --resource-group dhamika --name ajhavery --query id --output tsv)
+az webapp identity assign --resource-group dhamika --name dhamika-client --identities $id
+
+## Configure your app to pull from Azure Container Registry by using managed identities.
+
+appConfig=$(az webapp config show --resource-group <resource-group-name> --name <app-name> --query id --output tsv)
+az resource update --ids $appConfig --set properties.acrUseManagedIdentityCreds=True
+
+appConfig=$(az webapp config show --resource-group dhamika --name dhamika-client --query id --output tsv)
+az resource update --ids $appConfig --set properties.acrUseManagedIdentityCreds=True
+
+## Set the client ID your web app uses to pull from Azure Container Registry. This step isn't needed if you use the system-assigned managed identity.
+
+clientId=$(az identity show --resource-group <resource-group-name> --name <managed-id-name> --query clientId --output tsv)
+az resource update --ids $appConfig --set properties.AcrUserManagedIdentityID=$clientId
+
+clientId=$(az identity show --resource-group dhamika --name ajhavery --query clientId --output tsv)
+az resource update --ids $appConfig --set properties.AcrUserManagedIdentityID=$clientId
+
+## Enable CI/CD in App Service.
+
+cicdUrl=$(az webapp deployment container config --enable-cd true --name <app-name> --resource-group <resource-group-name> --query CI_CD_URL --output tsv)
+
+cicdUrl=$(az webapp deployment container config --enable-cd true --name dhamika-client --resource-group dhamika --query CI_CD_URL --output tsv)
+
+CI_CD_URL is a URL that App Service generates for you. Your registry should use this URL to notify App Service that an image push occurred. It doesn't actually create the webhook for you.
+
+## Create a webhook in your container registry using the CI_CD_URL you got from the last step.
+
+az acr webhook create --name <CD-service-name> --registry <registry-name> --uri $cicdUrl --actions push --scope <image-name>:latest
+
+az acr webhook create --name dhamikaAppServiceCD --registry dhamika --uri $cicdUrl --actions push --scope dhamika-client:latest
+
+## To test if your webhook is configured properly, ping the webhook, and see if you get a 200 OK response.
+
+eventId=$(az acr webhook ping --name <CD-service-name> --registry <registry-name> --query id --output tsv)
+az acr webhook list-events --name <CD-service-name> --registry <registry-name> --query "[?id=='$eventId'].eventResponseMessage"
+
+eventId=$(az acr webhook ping --name dhamikaAppServiceCD --registry dhamika --query id --output tsv)
+az acr webhook list-events --name dhamikaAppServiceCD --registry dhamika --query "[?id=='$eventId'].eventResponseMessage"
+
+# See container logs
+
+## Turn on container logging:
+
+az webapp log config --name <app-name> --resource-group <resource-group-name> --docker-container-logging filesystem
+az webapp log config --name dhamika-client --resource-group dhamika --docker-container-logging filesystem
+
+## Enable the log stream
+
+az webapp log tail --name <app-name> --resource-group <resource-group-name>
+az webapp log tail --name dhamika-client --resource-group dhamika
